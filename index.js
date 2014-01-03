@@ -4,32 +4,27 @@
 
 
 !function(root) {
-	var RESERVEDCHARS_RE = /[\]\[:\/?#@!$&()*+,;=']/g
-	//var RESERVEDCHARS_RE = new RegExp("[:/?#\\[\\]@!$&()*+,;=']","g");
-
-	function encodeNormal(val) {
-		return encodeURIComponent(val).replace(RESERVEDCHARS_RE, escape );
-	}
-
-	function addNamed(name, val) {
-		return name + "=" + val;
-	}
-
-	function addLabeled(name, val) {
-		return name + (val ? "=" : "") + val;
-	}
-
-	var re =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
-
-	var Joiners = {
+	var RESERVED = /[\]\[:\/?#@!$&()*+,;=']/g
+	, re =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
+	, Joiners = {
 		'':",", '+':",", '#':","
 		//, ';':";"
 		, '?':"&"
 		//, '&':"&", '/':"/", '.':"."
 	}
-	var Fns = {
-		";": addLabeled, "&": addNamed
+	, Fns = {
+		";": addLabeled, "&": addLabeled
 	}
+
+	function encodeNormal(val) {
+		return encodeURIComponent(val).replace(RESERVED, escape );
+	}
+
+
+	function addLabeled(name, val, joiner) {
+		return name + (val || joiner == "&" ? "=" : "") + val;
+	}
+
 
 
 
@@ -38,15 +33,13 @@
 	}
 
 		function work(data, _, op, vals) {
-			var list = vals.split(",")
-			, joiner = Joiners[op] || op
+			var joiner = Joiners[op] || op
 			, enc = op && joiner == "," ? encodeURI : encodeNormal
-			, fn = Fns[joiner] || null
-			, out = list.map(function(name){
-				var temp
-				, exp = name != (name = name.split("*")[0])
-				, len = !exp && (temp = name.split(":"), name=temp[0], temp[1])
-				, val = data[name]||""
+			, fn = Fns[joiner]
+			, out = mapCleanJoin(vals.split(","), function(name){
+				var exp = name != (name = name.split("*")[0])
+				, len = !exp && (len = name.split(":"), name=len[0], len[1])
+				, val = data[name]
 
 				if (!(name in data)) return
 
@@ -74,10 +67,8 @@
 					val = enc( len ? val.slice(0, len) : val )
 				}
 
-				return fn ? fn(name, val) : val
-			})
-			.filter(Boolean)
-			.join(joiner)
+				return fn ? fn(name, val, joiner) : val
+			}, joiner)
 
 
 			return (op!="+"&&out?op:"") + out
