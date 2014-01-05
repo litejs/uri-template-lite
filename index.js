@@ -2,7 +2,8 @@
 
 
 /*
-* @version  0.0.2
+* @version  0.0.3
+* @date     2014-01-05
 * @author   Lauri Rooden - https://github.com/litejs/uri-template-lite
 * @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
 */
@@ -25,12 +26,8 @@
 		return name + (val || joiner == "&" ? "=" : "") + val;
 	}
 
-	function isString(s){
-		return typeof s == "string"
-	}
-
 	function mapCleanJoin(arr, mapFn, joinStr) {
-		arr = arr.map(mapFn).filter(isString)
+		arr = arr.map(mapFn).filter(function(s){return typeof s == "string"})
 		return arr.length && arr.join(joinStr)
 	}
 
@@ -47,14 +44,14 @@
 
 			if (typeof val == "object") {
 				if (Array.isArray(val)) {
-					val=mapCleanJoin(val, enc, 
-						exp ? joiner + ((joiner == ";" || joiner == "&") ? name + "=" : "") : "," )
+					val = mapCleanJoin(val, enc, 
+						exp ? fn ? joiner + name + "=" : joiner : "," )
 				}
 				else {
 					var list_joiner = exp ? "=" : ","
 					val = mapCleanJoin(Object.keys(val), function(key){
-						return key in val && enc(key) + list_joiner + enc(val[key])
-					}, exp && (joiner == "/" || joiner == ";" || joiner == "&") ? joiner : "," )
+						return enc(key) + list_joiner + enc(val[key])
+					}, exp && (joiner == "/" || fn) ? joiner : "," )
 					if (exp) fn = null
 				}
 				if (!val) return
@@ -66,8 +63,6 @@
 			return fn ? fn(name, val, joiner) : val
 		}, joiner)
 
-
-		//return (op!="+"&&out||((op == "#" || op == ".") && out == "")?op:"") + (out||"")
 		return out ? (op!="+"?op+out:out) : out === "" && (op=="#"||op==".") ? op : ""
 	}
 
