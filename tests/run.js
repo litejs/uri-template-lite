@@ -26,7 +26,7 @@ function includeTests(file) {
 }
 
 includeTests("uritemplate-test/spec-examples.json")
-//includeTests("uritemplate-test/spec-examples-by-section.json")
+includeTests("uritemplate-test/spec-examples-by-section.json")
 includeTests("uritemplate-test/extended-tests.json")
 //includeTests("uritemplate-test/negative-tests.json")
 

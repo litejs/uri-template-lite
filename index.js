@@ -1,83 +1,77 @@
+
+
+
 /*
-* http://tools.ietf.org/html/rfc6570
+* @version  0.0.2
+* @author   Lauri Rooden - https://github.com/litejs/uri-template-lite
+* @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
 */
+
 
 
 !function(root) {
 	var RESERVED = /[\]\[:\/?#@!$&()*+,;=']/g
 	, re =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
-	, Joiners = {
-		'':",", '+':",", '#':","
-		//, ';':";"
-		, '?':"&"
-		//, '&':"&", '/':"/", '.':"."
-	}
-	, Fns = {
-		";": addLabeled, "&": addLabeled
+	, JOINERS = {
+		'':",", '+':",", '#':","     //, ';':";"
+		, '?':"&"                    //, '&':"&", '/':"/", '.':"."
 	}
 
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape );
 	}
 
-
 	function addLabeled(name, val, joiner) {
 		return name + (val || joiner == "&" ? "=" : "") + val;
 	}
 
-
-
-
-	function mapCleanJoin(arr, map, join) {
-		return arr.map(map).filter(Boolean).join(join)
+	function isString(s){
+		return typeof s == "string"
 	}
 
-		function work(data, _, op, vals) {
-			var joiner = Joiners[op] || op
-			, enc = op && joiner == "," ? encodeURI : encodeNormal
-			, fn = Fns[joiner]
-			, out = mapCleanJoin(vals.split(","), function(name){
-				var exp = name != (name = name.split("*")[0])
-				, len = !exp && (len = name.split(":"), name=len[0], len[1])
-				, val = data[name]
+	function mapCleanJoin(arr, mapFn, joinStr) {
+		arr = arr.map(mapFn).filter(isString)
+		return arr.length && arr.join(joinStr)
+	}
 
-				if (!(name in data)) return
+	function work(data, _, op, vals) {
+		var joiner = JOINERS[op] || op
+		, enc = op && joiner == "," ? encodeURI : encodeNormal
+		, fn = (joiner == ";" || joiner == "&") && addLabeled
+		, out = mapCleanJoin(vals.split(","), function(name){
+			var exp = name != (name = name.split("*")[0])
+			, len = !exp && (len = name.split(":"), name=len[0], len[1])
+			, val = data[name]
 
+			if (val == null) return
+
+			if (typeof val == "object") {
 				if (Array.isArray(val)) {
-					if (val.length == 0) return
 					val=mapCleanJoin(val, enc, 
 						exp ? joiner + ((joiner == ";" || joiner == "&") ? name + "=" : "") : "," )
-					/*
-					.map(enc)
-					.filter(function(n){return n})
-					.join(
-						exp ? joiner + ((joiner == ";" || joiner == "&") ? name + "=" : "") : ","
-					)
-					*/
 				}
-				else if (typeof val == "object") {
+				else {
 					var list_joiner = exp ? "=" : ","
 					val = mapCleanJoin(Object.keys(val), function(key){
 						return key in val && enc(key) + list_joiner + enc(val[key])
 					}, exp && (joiner == "/" || joiner == ";" || joiner == "&") ? joiner : "," )
-					if (val.length == 0) return
 					if (exp) fn = null
 				}
-				else {
-					val = enc( len ? val.slice(0, len) : val )
-				}
+				if (!val) return
+			}
+			else {
+				val = enc( len ? val.slice(0, len) : val )
+			}
 
-				return fn ? fn(name, val, joiner) : val
-			}, joiner)
+			return fn ? fn(name, val, joiner) : val
+		}, joiner)
 
 
-			return (op!="+"&&out?op:"") + out
-				
-		}
+		//return (op!="+"&&out||((op == "#" || op == ".") && out == "")?op:"") + (out||"")
+		return out ? (op!="+"?op+out:out) : out === "" && (op=="#"||op==".") ? op : ""
+	}
 
 	function expand(template, data) {
-
-
 		return template.replace(re, work.bind(null, data))
 	}
 
