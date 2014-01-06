@@ -1,7 +1,7 @@
 
 
-    @version  0.0.3
-    @date     2014-01-05
+    @version  0.0.4
+    @date     2014-01-06
 
 
 uri-template
