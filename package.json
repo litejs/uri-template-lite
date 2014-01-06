@@ -1,6 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "description": "URI Templates.",
   "main": "index.js",
@@ -25,7 +25,8 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "buildman": "*",
-    "testman": "*"
+    "testman": "*",
+    "browser-upgrade-lite": "*"
   },
   "buildman": {
     "min.js": "index.js"

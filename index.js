@@ -2,7 +2,7 @@
 
 
 /*
-* @version  0.0.4
+* @version  0.0.5
 * @date     2014-01-06
 * @author   Lauri Rooden - https://github.com/litejs/uri-template-lite
 * @license  MIT License  - http://lauri.rooden.ee/mit-license.txt

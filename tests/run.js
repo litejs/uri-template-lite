@@ -1,11 +1,13 @@
 
+
+require("browser-upgrade-lite")
+
 var uri = require("../").expand
 
 var test = require("testman")
 .describe("URI Template");
 
-function includeTests(file) {
-	var json = require(process.env.PWD + "/tests/" + file)
+function includeTests(json) {
 
 	for(var level in json) {
 		var arr = json[level].testcases, len = arr.length, i = 0
@@ -25,9 +27,9 @@ function includeTests(file) {
 	}
 }
 
-includeTests("uritemplate-test/spec-examples.json")
-includeTests("uritemplate-test/spec-examples-by-section.json")
-includeTests("uritemplate-test/extended-tests.json")
+includeTests(require("./uritemplate-test/spec-examples.json"))
+includeTests(require("./uritemplate-test/spec-examples-by-section.json"))
+includeTests(require("./uritemplate-test/extended-tests.json"))
 //includeTests("uritemplate-test/negative-tests.json")
 
 

@@ -6,7 +6,7 @@
 [8]: https://ci.testling.com/litejs/uri-template-lite
 
 
-    @version  0.0.4
+    @version  0.0.5
     @date     2014-01-06
 
 
