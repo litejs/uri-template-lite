@@ -2,7 +2,7 @@
 
 require("browser-upgrade-lite")
 
-var uri = require("../").expand
+var URI = require("../").URI
 
 var test = require("testman")
 .describe("URI Template");
@@ -15,7 +15,7 @@ function includeTests(json) {
 
 		test = test.it("should pass "+level)
 		for (;i<len;i++) {
-			var res = uri(arr[i][0], args)
+			var res = URI.expand(arr[i][0], args)
 			if (Array.isArray(arr[i][1])) {
 				test = test.ok(function(){
 					return arr[i][1].indexOf(res) != -1
@@ -31,7 +31,6 @@ includeTests(require("./uritemplate-test/spec-examples.json"))
 includeTests(require("./uritemplate-test/spec-examples-by-section.json"))
 includeTests(require("./uritemplate-test/extended-tests.json"))
 //includeTests("uritemplate-test/negative-tests.json")
-
 
 
 test.done()

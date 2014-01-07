@@ -2,15 +2,16 @@
 
 
 /*
-* @version  0.0.5
-* @date     2014-01-06
-* @author   Lauri Rooden - https://github.com/litejs/uri-template-lite
-* @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
+* @version    0.1.0
+* @date       2014-01-07
+* @stability  1 - Experimental
+* @author     Lauri Rooden <lauri@rooden.ee>
+* @license    MIT License
 */
 
 
 
-!function(root) {
+!function(URI) {
 	var RESERVED = /[\]\[:\/?#@!$&()*+,;=']/g
 	, RE =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
 	, JOINERS = {
@@ -36,7 +37,7 @@
 			var joiner = JOINERS[op] || op
 			, enc = op && joiner == "," ? encodeURI : encodeNormal
 			, add = (joiner == ";" || joiner == "&") && addNamed
-			, out = mapCleanJoin(vals.split(","), function(name){
+			, out = mapCleanJoin(vals.split(","), function(name) {
 				var exp = name != (name = name.split("*")[0])
 				, len = !exp && (len = name.split(":"), name=len[0], len[1])
 				, val = data[name]
@@ -45,14 +46,13 @@
 
 				if (typeof val == "object") {
 					if (Array.isArray(val)) {
-						val = mapCleanJoin(val, enc, 
-							exp ? add ? joiner + name + "=" : joiner : "," )
+						val = mapCleanJoin(val, enc, exp ? add ? joiner + name + "=" : joiner : "," )
 					}
 					else {
 						len = exp ? "=" : ","
-						val = mapCleanJoin(Object.keys(val), function(key){
+						val = mapCleanJoin(Object.keys(val), function(key) {
 							return enc(key) + len + enc(val[key])
-						}, exp && (joiner == "/" || add) ? joiner : "," )
+						}, exp && (add || joiner == "/") ? joiner : "," )
 						if (exp) add = null
 					}
 					if (!val) return
@@ -68,6 +68,7 @@
 		}
 	)}
 
-	root.expand = expand
-}(this);
+	URI.expand = expand
+// `this` is `exports` in NodeJS and `window` in browser.
+}(this.URI || (this.URI = {}));
 

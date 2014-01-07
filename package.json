@@ -1,10 +1,22 @@
 {
   "name": "uri-template-lite",
-  "version": "0.0.5",
+  "version": "0.1.0",
+  "stability": 1,
   "license": "MIT",
-  "description": "URI Templates.",
-  "main": "index.js",
   "author": "Lauri Rooden <lauri@rooden.ee>",
+  "description": "URI Template [RFC 6570] implementation in less than 1kb",
+  "keywords": [
+    "uri",
+    "template",
+    "litejs"
+  ],
+  "main": "index.js",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build": "node node_modules/buildman/index.js --all",
+    "travis-test": "istanbul cover ./tests/run.js && (coveralls < coverage/lcov.info || exit 0)",
+    "test": "node tests/run.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/litejs/uri-template-lite.git"
@@ -12,24 +24,13 @@
   "bugs": {
     "url": "https://github.com/litejs/uri-template-lite/issues"
   },
-  "scripts": {
-    "build": "node node_modules/buildman/index.js --all",
-    "travis-test": "istanbul cover ./tests/run.js && (coveralls < coverage/lcov.info || exit 0)",
-    "test": "node tests/run.js"
-  },
-  "keywords": [
-    "uri",
-    "template",
-    "litejs"
-  ],
-  "readmeFilename": "README.md",
   "devDependencies": {
     "buildman": "*",
     "testman": "*",
     "browser-upgrade-lite": "*"
   },
   "buildman": {
-    "min.js": "index.js"
+    "uri-template-min.js": "index.js"
   },
   "testling": {
     "files": "tests/run.js",
