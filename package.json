@@ -1,7 +1,7 @@
 {
   "name": "uri-template-lite",
   "version": "0.1.0",
-  "stability": 1,
+  "stability": 2,
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "description": "URI Template [RFC 6570] implementation in less than 1kb",

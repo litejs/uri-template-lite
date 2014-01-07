@@ -10,7 +10,7 @@
 
     @version    0.1.0
     @date       2014-01-07
-    @stability  1 - Experimental
+    @stability  2 - Unstable
 
 
 URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4]

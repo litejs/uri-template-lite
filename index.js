@@ -4,7 +4,7 @@
 /*
 * @version    0.1.0
 * @date       2014-01-07
-* @stability  1 - Experimental
+* @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
 * @license    MIT License
 */
@@ -20,7 +20,10 @@
 	}
 
 	function encodeNormal(val) {
-		return encodeURIComponent(val).replace(RESERVED, escape );
+		return encodeURIComponent(val).replace(RESERVED, function(s) {
+			// Do not apply a non-standard second argument for escape in FF3-4.
+			return escape(s)
+		});
 	}
 
 	function addNamed(name, val, joiner) {
