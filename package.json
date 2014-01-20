@@ -1,6 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "stability": 2,
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "buildman": "*",
     "testman": "*",
-    "browser-upgrade-lite": "*"
+    "browser-upgrade-lite": ">=0.1.6"
   },
   "buildman": {
     "uri-template-min.js": "index.js"
