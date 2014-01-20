@@ -2,7 +2,7 @@
 
 
 /*
-* @version    0.1.2
+* @version    0.1.3
 * @date       2014-01-20
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>

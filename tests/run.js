@@ -1,6 +1,9 @@
 
 
-require("browser-upgrade-lite")
+var mod = require("browser-upgrade-lite")
+// Fix for FF3 tests in testling.com
+global.escape = mod.escape || global.escape
+
 
 var URI = require("../").URI
 
