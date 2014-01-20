@@ -65,7 +65,10 @@ Browser Support
 
 [![browser support][7]][8]
 
--   For IE6-9 it requires `browser-upgrade-lite` module or other ES5 polyfill.
+-   For older browsers it requires `browser-upgrade-lite` package 
+    or other ES5 polyfill.
+-   FF3-4 `escape` should be patched to remove non-standard 2nd param, 
+    `browser-upgrade-lite` does that.
 
 
 

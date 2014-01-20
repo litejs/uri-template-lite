@@ -27,7 +27,7 @@
   "devDependencies": {
     "buildman": "*",
     "testman": "*",
-    "browser-upgrade-lite": ">=0.1.6"
+    "browser-upgrade-lite": ">=0.1.7"
   },
   "buildman": {
     "uri-template-min.js": "index.js"
