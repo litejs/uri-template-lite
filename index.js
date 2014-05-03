@@ -2,8 +2,8 @@
 
 
 /*
-* @version    0.1.3
-* @date       2014-01-20
+* @version    0.1.4
+* @date       2014-05-03
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
 * @license    MIT License
@@ -14,7 +14,7 @@
 !function(URI) {
 	var RESERVED = /[\]\[:\/?#@!$&()*+,;=']/g
 	, RE =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
-	, JOINERS = {
+	, SEPARATORS = {
 		'':",", '+':",", '#':","     //, ';':";"
 		, '?':"&"                    //, '&':"&", '/':"/", '.':"."
 	}
@@ -23,8 +23,8 @@
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
 
-	function addNamed(name, val, joiner) {
-		return name + (val || joiner == "&" ? "=" : "") + val;
+	function addNamed(name, val, sep) {
+		return name + (val || sep == "&" ? "=" : "") + val;
 	}
 
 	function mapCleanJoin(arr, mapFn, joinStr) {
@@ -34,9 +34,9 @@
 
 	function expand(template, data) {
 		return template.replace(RE, function(_, op, vals) {
-			var joiner = JOINERS[op] || op
-			, enc = op && joiner == "," ? encodeURI : encodeNormal
-			, add = (joiner == ";" || joiner == "&") && addNamed
+			var sep = SEPARATORS[op] || op
+			, enc = op && sep == "," ? encodeURI : encodeNormal
+			, add = (sep == ";" || sep == "&") && addNamed
 			, out = mapCleanJoin(vals.split(","), function(name) {
 				var exp = name != (name = name.split("*")[0])
 				, len = !exp && (len = name.split(":"), name=len[0], len[1])
@@ -46,13 +46,13 @@
 
 				if (typeof val == "object") {
 					if (Array.isArray(val)) {
-						val = mapCleanJoin(val, enc, exp ? add ? joiner + name + "=" : joiner : "," )
+						val = mapCleanJoin(val, enc, exp ? add ? sep + name + "=" : sep : "," )
 					}
 					else {
 						len = exp ? "=" : ","
 						val = mapCleanJoin(Object.keys(val), function(key) {
 							return enc(key) + len + enc(val[key])
-						}, exp && (add || joiner == "/") ? joiner : "," )
+						}, exp && (add || sep == "/") ? sep : "," )
 						if (exp) add = null
 					}
 					if (!val) return
@@ -61,8 +61,8 @@
 					val = enc( len ? val.slice(0, len) : val )
 				}
 
-				return add ? add(name, val, joiner) : val
-			}, joiner)
+				return add ? add(name, val, sep) : val
+			}, sep)
 
 			return out ? (op!="+"?op+out:out) : out === "" && (op=="#"||op==".") ? op : ""
 		}
