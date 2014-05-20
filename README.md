@@ -8,8 +8,8 @@
 [npm-package]: https://npmjs.org/package/uri-template-lite
 
 
-    @version    0.1.4
-    @date       2014-05-03
+    @version    0.1.5
+    @date       2014-05-20
     @stability  2 - Unstable
 
 

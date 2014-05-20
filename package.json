@@ -1,6 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "stability": 2,
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
@@ -27,7 +27,17 @@
     "browser-upgrade-lite": ">=0.1.7"
   },
   "buildman": {
-    "uri-template-min.js": "index.js"
+    "build/uri-template-min.js": "index.js",
+    "build/uri-expand.js": {
+      "devel": true,
+      "input": "index.js",
+      "toggle": "PARSE"
+    },
+    "build/uri-parse.js": {
+      "devel": true,
+      "input": "index.js",
+      "toggle": "EXPAND"
+    }
   },
   "testling": {
     "files": "tests/run.js",

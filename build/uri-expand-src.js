@@ -86,7 +86,7 @@
 	function Template(template) {
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
-	//** PARSE
+	/*** PARSE
 		self.init(self.template = template)
 	//*/
 	//** EXPAND
@@ -98,7 +98,7 @@
 	*  eq = eq  || '=';
 	*/
 
-	//** PARSE
+	/*** PARSE
 	Template.prototype = {
 		init: function(template) {
 			var pos = 0

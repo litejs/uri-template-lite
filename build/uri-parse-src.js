@@ -43,7 +43,7 @@
 		return arr.length && arr.join(joinStr)
 	}
 
-	//** EXPAND
+	/*** EXPAND
 	function expand(template, data) {
 		return template.replace(expandRe, function(_, op, vals) {
 			var sep = SEPARATORS[op] || op
@@ -89,7 +89,7 @@
 	//** PARSE
 		self.init(self.template = template)
 	//*/
-	//** EXPAND
+	/*** EXPAND
 		self.expand = expand.bind(self, template)
 	//*/
 	}

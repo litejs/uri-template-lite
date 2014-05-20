@@ -8,9 +8,47 @@ global.escape = mod.escape || global.escape
 var URI = require("../").URI
 
 var test = require("testman")
-.describe("URI Template");
 
-function includeTests(json) {
+test.asserts.hasVals = function(a, b, options) {
+	var ok = a && true
+	ok && Object.keys(a).forEach(function(key){
+		if (
+		key in b &&
+		a[key] != b[key] &&
+		""+a[key] != ""+b[key] &&
+		(typeof a[key] == "string" && b[key] && (""+b[key]).slice(0, a[key].length) != a[key])
+		) ok = false
+		ok || console.log("test", key, ok)
+	})
+	ok || console.log("\n\nCompare:\n" + JSON.stringify(a) + "\n" + JSON.stringify(b))
+	return this.ok(ok, options || "Expected: "+b+" Got: "+a )
+}
+
+
+test = test.describe("URI Template Expand");
+
+includeExpandTests(require("./uritemplate-test/spec-examples.json"))
+includeExpandTests(require("./longer-spec-examples.json"))
+includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
+includeExpandTests(require("./uritemplate-test/extended-tests.json"))
+
+//includeExpandTests("uritemplate-test/negative-tests.json")
+
+
+
+test = test.describe("URI Template Match");
+
+includeMatchTests(require("./uritemplate-test/spec-examples.json"))
+includeMatchTests(require("./longer-spec-examples.json"))
+//includeMatchTests(require("./uritemplate-test/spec-examples-by-section.json"))
+//includeMatchTests(require("./uritemplate-test/extended-tests.json"))
+
+//includeMatchTests("uritemplate-test/negative-tests.json")
+
+
+test.done()
+
+function includeExpandTests(json) {
 
 	for(var level in json) {
 		var arr = json[level].testcases, len = arr.length, i = 0
@@ -30,11 +68,30 @@ function includeTests(json) {
 	}
 }
 
-includeTests(require("./uritemplate-test/spec-examples.json"))
-includeTests(require("./uritemplate-test/spec-examples-by-section.json"))
-includeTests(require("./uritemplate-test/extended-tests.json"))
-//includeTests("uritemplate-test/negative-tests.json")
+function includeMatchTests(json) {
 
+	for(var level in json) {
+		var arr = json[level].testcases, len = arr.length, i = 0
+		, args = json[level].variables
 
-test.done()
+		test = test.it("should pass "+level)
+		for (;i<len;i++) {
+			if (Array.isArray(arr[i][1])) {
+				//test = test.ok(function(){
+				//	return arr[i][1].indexOf(res) != -1
+				//})
+			} else {
+				var uri = new URI.Template(arr[i][0])
+				res = uri.match(arr[i][1])
+				var msg = "# re: " + uri.re + " (" + arr[i][0] + ") : " + arr[i][1] + " ->\n" +
+					JSON.stringify(res) + "\n" +
+					JSON.stringify(args)
+
+				//console.log(msg, uri.keys)
+				test = test.type(res, "object", msg)
+				test.hasVals(res, args, msg)
+			}
+		}
+	}
+}
 
