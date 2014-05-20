@@ -4,11 +4,9 @@
 [4]: https://coveralls.io/r/litejs/uri-template-lite
 [7]: https://ci.testling.com/litejs/uri-template-lite.png
 [8]: https://ci.testling.com/litejs/uri-template-lite
-[rfc-6570]: http://tools.ietf.org/html/rfc6570
-[npm-package]: https://npmjs.org/package/uri-template-lite
 
 
-    @version    0.1.5
+    @version    0.1.6
     @date       2014-05-20
     @stability  2 - Unstable
 
@@ -41,12 +39,26 @@ var URI = require("uri-template-lite").URI
 Usage
 -----
 
+### Simple expand
+
 ```javascript
 var data = {"domain":"example.com", "user":"fred", "query":"mycelium"}
 URI.expand("http://{domain}/~{user}/foo{?query,number}", data)
 // http://example.com/~fred/foo?query=mycelium
 ```
 
+### Using Template constructor
+
+```javascript
+var template = new URI.Template("http://{domain}/~{user}/foo{?query,number}")
+var data = {"domain":"example.com", "user":"fred", "query":"mycelium", "number": 3}
+template.expand(data)
+// http://example.com/~fred/foo?query=mycelium&number=3
+template.match("http://example.com/~fred/foo?query=mycelium&number=3")
+// {"domain":"example.com", "user":"fred", "query":"mycelium", "number": "3"}
+template.match("http://other.com/?query=mycelium")
+// false
+```
 
 
 About error handling
@@ -75,9 +87,9 @@ Browser Support
 External links
 --------------
 
--   [npm-package][]
--   [rfc-6570][]
-
+-   [Source-code on Github](https://github.com/litejs/uri-template-lite)
+-   [Package on npm](https://npmjs.org/package/uri-template-lite)
+-   [RFC 6570 - URI Template](http://tools.ietf.org/html/rfc6570)
 
 
 ### Licence
