@@ -4,9 +4,10 @@
 [4]: https://coveralls.io/r/litejs/uri-template-lite
 [7]: https://ci.testling.com/litejs/uri-template-lite.png
 [8]: https://ci.testling.com/litejs/uri-template-lite
+[RFC 6570 - URI Template]: http://tools.ietf.org/html/rfc6570
 
 
-    @version    0.1.8
+    @version    0.1.9
     @date       2014-05-21
     @stability  2 - Unstable
 
@@ -15,7 +16,7 @@
 URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4]
 ============
 
-URI Template [RFC 6570][rfc-6570] implementation in less than 1kb.
+[RFC 6570 - URI Template][] implementation in JavaScript.
 
 
 
@@ -89,7 +90,7 @@ External links
 
 -   [Source-code on Github](https://github.com/litejs/uri-template-lite)
 -   [Package on npm](https://npmjs.org/package/uri-template-lite)
--   [RFC 6570 - URI Template](http://tools.ietf.org/html/rfc6570)
+-   [RFC 6570 - URI Template][]
 
 
 ### Licence

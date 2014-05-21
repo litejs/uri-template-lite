@@ -3,6 +3,7 @@
 var mod = require("browser-upgrade-lite")
 // Fix for FF3 tests in testling.com
 global.escape = mod.escape || global.escape
+global.JSON = global.JSON || mod.JSON
 
 
 var URI = require("../").URI
@@ -28,22 +29,21 @@ test.asserts.hasVals = function(a, b, options) {
 test = test.describe("URI Template Expand");
 
 includeExpandTests(require("./uritemplate-test/spec-examples.json"))
-includeExpandTests(require("./longer-spec-examples.json"))
 includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
 includeExpandTests(require("./uritemplate-test/extended-tests.json"))
-
 //includeExpandTests("uritemplate-test/negative-tests.json")
+includeExpandTests(require("./custom-examples.json"))
 
 
 
 test = test.describe("URI Template Match");
 
 includeMatchTests(require("./uritemplate-test/spec-examples.json"))
-includeMatchTests(require("./longer-spec-examples.json"))
 //includeMatchTests(require("./uritemplate-test/spec-examples-by-section.json"))
 //includeMatchTests(require("./uritemplate-test/extended-tests.json"))
-
 //includeMatchTests("uritemplate-test/negative-tests.json")
+includeMatchTests(require("./custom-examples.json"))
+
 
 
 test.done()

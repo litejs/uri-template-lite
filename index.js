@@ -2,7 +2,7 @@
 
 
 /*
-* @version    0.1.8
+* @version    0.1.9
 * @date       2014-05-21
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
@@ -123,6 +123,7 @@
 					else if (len = lengths[name]) {
 						re = "(\\"+len.pos+".*?)"
 					}
+					//TODO: decodeURIComponent throws an Error on invalid input, add try-catch
 					fnStr += "t=($["+pos+"]||'').split('"+ separator +"').map(decodeURIComponent);"
 					fnStr += "o[\""+name+"\"]=t.length>1?t:t[0];"
 					return add ?

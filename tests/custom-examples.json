@@ -1,0 +1,12 @@
+{
+  "Percent encoding" :
+  {
+    "variables": {
+       "var"   : "foo\nbar",
+       "hello" : "Hello World!"
+     },
+     "testcases" : [
+        ["http://example.com/{?var}", "http://example.com/?var=foo%0Abar"]
+     ]
+  }
+}
