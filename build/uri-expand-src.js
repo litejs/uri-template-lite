@@ -2,7 +2,7 @@
 
 
 /*
-* @version    0.1.7
+* @version    0.1.8
 * @date       2014-05-21
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
@@ -22,17 +22,10 @@
 	//, parseRe  =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}|.[^{]*?/g
 	, parseRe  =  new RegExp(expandRe.source + "|.[^{]*?", "g")
 
+	//** EXPAND
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
-	function decodeNormal(val) {
-		return decodeURIComponent(val)//.replace(RESERVED, escape)
-	}
-
-	function escapeRegExp(string) {
-		return string.replace(escapeRe, "\\$&")
-	}
-
 
 	function addNamed(name, val, sep) {
 		return name + (val || sep == "&" ? "=" : "") + val;
@@ -43,7 +36,6 @@
 		return arr.length && arr.join(joinStr)
 	}
 
-	//** EXPAND
 	function expand(template, data) {
 		return template.replace(expandRe, function(_, op, vals) {
 			var sep = SEPARATORS[op] || op
@@ -99,6 +91,10 @@
 	*/
 
 	/*** PARSE
+	function escapeRegExp(string) {
+		return string.replace(escapeRe, "\\$&")
+	}
+
 	Template.prototype = {
 		init: function(template) {
 			var pos = 0
@@ -108,7 +104,7 @@
 				if (!key) return escapeRegExp(_)
 
 				var separator = SEPARATORS[op] || op
-				, dec = op && separator == "," ? decodeURI : decodeNormal
+				//, dec = op && separator == "," ? decodeURI : decodeNormal
 				, add = (separator == ";" || separator == "&")
 
 				//fnStr += 'sep="'+separator+'";'

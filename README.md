@@ -6,7 +6,7 @@
 [8]: https://ci.testling.com/litejs/uri-template-lite
 
 
-    @version    0.1.7
+    @version    0.1.8
     @date       2014-05-21
     @stability  2 - Unstable
 
