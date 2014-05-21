@@ -2,8 +2,8 @@
 
 
 /*
-* @version    0.1.6
-* @date       2014-05-20
+* @version    0.1.7
+* @date       2014-05-21
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
 * @license    MIT License
@@ -110,42 +110,37 @@
 				var separator = SEPARATORS[op] || op
 				, dec = op && separator == "," ? decodeURI : decodeNormal
 				, add = (separator == ";" || separator == "&")
-				, reGroup = "(.+?)"
 
-				fnStr += 'sep="'+separator+'";'
+				//fnStr += 'sep="'+separator+'";'
 
 				var reGroup = key.split(",").map(function(name) {
-					var len, exp
-					name = name.replace(/(?:(\*)|:(\d+))$/, function(_, _exp, _len) {
-						len = _len
-						exp = _exp
-						return ""
-					})
+					var re = "(.*?)"
+					, exp = name != (name = name.split("*")[0])
+					, len = !exp && (len = name.split(":"), name=len[0], len[1])
 
-					var reGroup = "(.*?)"
 					pos++
 					//console.log("KEY", arguments)
 					if (len) {
-						reGroup = "((?:%..|.){1,"+len+"})"
+						re = "((?:%..|.){1,"+len+"})"
 						lengths[name] = {pos:pos, len: len}
 					}
 					else if (len = lengths[name]) {
-						reGroup = "(\\"+len.pos+".*?)"
+						re = "(\\"+len.pos+".*?)"
 					}
-					fnStr += "t=(parts["+pos+"]||'').split('"+ separator +"');"
-					fnStr += "out[\""+name+"\"]=t.length>1?t.map(decodeURIComponent):decodeURIComponent(t[0]);"
+					fnStr += "t=($["+pos+"]||'').split('"+ separator +"').map(decodeURIComponent);"
+					fnStr += "o[\""+name+"\"]=t.length>1?t:t[0];"
 					return add ?
 						separator == "&" ?
-						escapeRegExp(name + "=") + reGroup
-						: escapeRegExp(name) + "(?:="+reGroup+")?"
-						: reGroup
+						escapeRegExp(name + "=") + re
+						: escapeRegExp(name) + "(?:="+re+")?"
+						: re
 				}).join(escapeRegExp(separator))
 				return (op!="+"?escapeRegExp(op):"")+reGroup
 
 			}) + "$"
 
 			this.re = new RegExp(reStr)
-			this.fn = new Function("parts", "var t,sep,eq,out={};"+fnStr+";return out")
+			this.fn = new Function("$", "var t,o={};"+fnStr+"return o")
 		},
 		match: function(uri) {
 			var match = this.re.exec(uri)
