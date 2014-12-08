@@ -1,13 +1,14 @@
 {
   "name": "uri-template-lite",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "stability": 2,
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
-  "description": "URI Template [RFC 6570] implementation in less than 1kb",
+  "description": "URI Template [RFC 6570] implementation",
   "keywords": [
     "uri",
     "template",
+    "rfc6570",
     "litejs"
   ],
   "main": "index.js",
@@ -27,41 +28,16 @@
     "browser-upgrade-lite": ">=0.1.7"
   },
   "buildman": {
-    "build/uri-template-min.js": "index.js",
-    "build/uri-expand.js": {
+    "dist/uri-template-min.js": "index.js",
+    "dist/uri-expand.js": {
       "devel": true,
       "input": "index.js",
       "toggle": "PARSE"
     },
-    "build/uri-parse.js": {
+    "dist/uri-parse.js": {
       "devel": true,
       "input": "index.js",
       "toggle": "EXPAND"
     }
-  },
-  "testling": {
-    "files": "tests/run.js",
-    "browsers": [
-      "ie/6..10",
-      "ff/3",
-      "ff/4",
-      "ff/5",
-      "ff/20",
-      "ff/25",
-      "chrome/4",
-      "chrome/10",
-      "chrome/20",
-      "chrome/30",
-      "chrome/31",
-      "opera/10",
-      "opera/11",
-      "opera/11.6",
-      "opera/12",
-      "opera/16",
-      "safari/4..6",
-      "android-browser/4.2",
-      "iphone/6",
-      "ipad/6"
-    ]
   }
 }

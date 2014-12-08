@@ -2,8 +2,8 @@
 
 
 /*
-* @version    0.1.9
-* @date       2014-05-21
+* @version    0.1.10
+* @date       2014-12-08
 * @stability  2 - Unstable
 * @author     Lauri Rooden <lauri@rooden.ee>
 * @license    MIT License
@@ -12,14 +12,16 @@
 
 
 !function(URI) {
+
+	/**
+	 * URI Template
+	 * @see http://tools.ietf.org/html/rfc6570
+	 */
+
 	var RESERVED = /[\]\[:\/?#@!$&()*+,;=']/g
-	, SEPARATORS = {
-		'':",", '+':",", '#':","     //, ';':";"
-		, '?':"&"                    //, '&':"&", '/':"/", '.':"."
-	}
+	, SEPARATORS = {"": ",", "+": ",", "#": ",", "?": "&"}
 	, escapeRe = /[.*+?^=!:${}()|\[\]\/\\]/g
 	, expandRe = /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}/g
-	//, parseRe  =  /\{([+#.\/;?&]?)((?:[\w%.]+(\*|:\d)?,?)+)\}|.[^{]*?/g
 	, parseRe  =  new RegExp(expandRe.source + "|.[^{]*?", "g")
 
 	//** EXPAND
@@ -28,11 +30,15 @@
 	}
 
 	function addNamed(name, val, sep) {
-		return name + (val || sep == "&" ? "=" : "") + val;
+		return name + (val || sep == "&" ? "=" : "") + val
+	}
+
+	function typeofString(s) {
+		return typeof s == "string"
 	}
 
 	function mapCleanJoin(arr, mapFn, joinStr) {
-		arr = arr.map(mapFn).filter(function(s){return typeof s == "string"})
+		arr = arr.map(mapFn).filter(typeofString)
 		return arr.length && arr.join(joinStr)
 	}
 
@@ -43,7 +49,7 @@
 			, add = (sep == ";" || sep == "&") && addNamed
 			, out = mapCleanJoin(vals.split(","), function(name) {
 				var exp = name != (name = name.split("*")[0])
-				, len = !exp && (len = name.split(":"), name=len[0], len[1])
+				, len = !exp && (len = name.split(":"), name = len[0], len[1])
 				, val = data[name]
 
 				if (val == null) return
@@ -51,24 +57,21 @@
 				if (typeof val == "object") {
 					if (Array.isArray(val)) {
 						val = mapCleanJoin(val, enc, exp ? add ? sep + name + "=" : sep : "," )
-					}
-					else {
-						len = exp ? "=" : ","
+					} else {
 						val = mapCleanJoin(Object.keys(val), function(key) {
-							return enc(key) + len + enc(val[key])
-						}, exp && (add || sep == "/") ? sep : "," )
+							return enc(key) + (exp ? "=" : ",") + enc(val[key])
+						}, exp && (add || sep == "/") ? sep : ",")
 						if (exp) add = null
 					}
 					if (!val) return
-				}
-				else {
-					val = enc( len ? val.slice(0, len) : val )
+				} else {
+					val = enc(len ? val.slice(0, len) : val)
 				}
 
 				return add ? add(name, val, sep) : val
 			}, sep)
 
-			return out ? (op!="+"?op+out:out) : out === "" && (op=="#"||op==".") ? op : ""
+			return out || out === "" ? (op != "+" ? op + out : out) : ""
 		}
 	)}
 
@@ -79,7 +82,7 @@
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
 	//** PARSE
-		self.init(self.template = template)
+		self.init(template)
 	//*/
 	//** EXPAND
 		self.expand = expand.bind(self, template)
@@ -100,7 +103,7 @@
 			var pos = 0
 			, fnStr = ""
 			, lengths = {}
-			, reStr = "^"+ template.replace(parseRe, function(_, op, key) {
+			, reStr = "^" + template.replace(parseRe, function(_, op, key) {
 				if (!key) return escapeRegExp(_)
 
 				var separator = SEPARATORS[op] || op
@@ -117,27 +120,28 @@
 					pos++
 					//console.log("KEY", arguments)
 					if (len) {
-						re = "((?:%..|.){1,"+len+"})"
-						lengths[name] = {pos:pos, len: len}
+						re = "((?:%..|.){1," + len + "})"
+						lengths[name] = {pos: pos, len: len}
 					}
 					else if (len = lengths[name]) {
-						re = "(\\"+len.pos+".*?)"
+						re = "(\\" + len.pos + ".*?)"
 					}
 					//TODO: decodeURIComponent throws an Error on invalid input, add try-catch
 					fnStr += "t=($["+pos+"]||'').split('"+ separator +"').map(decodeURIComponent);"
-					fnStr += "o[\""+name+"\"]=t.length>1?t:t[0];"
+					fnStr += "o[\"" + name + "\"]=t.length>1?t:t[0];"
 					return add ?
 						separator == "&" ?
 						escapeRegExp(name + "=") + re
-						: escapeRegExp(name) + "(?:="+re+")?"
+						: escapeRegExp(name) + "(?:=" + re + ")?"
 						: re
 				}).join(escapeRegExp(separator))
-				return (op!="+"?escapeRegExp(op):"")+reGroup
+				return (op != "+" ? escapeRegExp(op) : "") + reGroup
 
 			}) + "$"
 
+			this.template = template
 			this.re = new RegExp(reStr)
-			this.fn = new Function("$", "var t,o={};"+fnStr+"return o")
+			this.fn = new Function("$", "var t,o={};" + fnStr + "return o")
 		},
 		match: function(uri) {
 			var match = this.re.exec(uri)

@@ -2,13 +2,11 @@
 [2]: https://travis-ci.org/litejs/uri-template-lite
 [3]: https://coveralls.io/repos/litejs/uri-template-lite/badge.png
 [4]: https://coveralls.io/r/litejs/uri-template-lite
-[7]: https://ci.testling.com/litejs/uri-template-lite.png
-[8]: https://ci.testling.com/litejs/uri-template-lite
-[RFC 6570 - URI Template]: http://tools.ietf.org/html/rfc6570
+[RFC 6570]: http://tools.ietf.org/html/rfc6570
 
 
-    @version    0.1.9
-    @date       2014-05-21
+    @version    0.1.10
+    @date       2014-12-08
     @stability  2 - Unstable
 
 
@@ -16,7 +14,7 @@
 URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4]
 ============
 
-[RFC 6570 - URI Template][] implementation in JavaScript.
+URI Template [RFC 6570][] implementation in JavaScript.
 
 
 
@@ -65,10 +63,10 @@ template.match("http://other.com/?query=mycelium")
 About error handling
 --------------------
 
-This implementation tries to do a best effort template expansion 
-and leaves erroneous expressions in the returned URI 
+This implementation tries to do a best effort template expansion
+and leaves erroneous expressions in the returned URI
 instead of throwing errors.
-So for example, the incorrect expression 
+So for example, the incorrect expression
 {unclosed will return {unclosed as output.
 
 
@@ -76,11 +74,11 @@ So for example, the incorrect expression
 Browser Support
 ---------------
 
-[![browser support][7]][8]
+It should work IE6 and up but automated testing is currently broken.
 
--   For older browsers it requires `browser-upgrade-lite` package 
+-   For older browsers it requires `browser-upgrade-lite` package
     or other ES5 polyfill.
--   FF3-4 `escape` should be patched to remove non-standard 2nd param, 
+-   FF3-4 `escape` should be patched to remove non-standard 2nd param,
     `browser-upgrade-lite` does that.
 
 
@@ -90,7 +88,7 @@ External links
 
 -   [Source-code on Github](https://github.com/litejs/uri-template-lite)
 -   [Package on npm](https://npmjs.org/package/uri-template-lite)
--   [RFC 6570 - URI Template][]
+-   URI Template [RFC 6570][]
 
 
 ### Licence
