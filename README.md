@@ -5,8 +5,8 @@
 [RFC 6570]: http://tools.ietf.org/html/rfc6570
 
 
-    @version    0.1.10
-    @date       2014-12-08
+    @version    0.1.11
+    @date       2015-02-09
     @stability  2 - Unstable
 
 
@@ -14,8 +14,31 @@
 URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4]
 ============
 
-URI Template [RFC 6570][] implementation in JavaScript.
+URI Template [RFC 6570][] expansion and extraction.
 
+
+Usage
+-----
+
+```javascript
+// Call `expand` directly
+var data = {"domain":"example.com", "user":"fred", "query":"mycelium"}
+URI.expand("http://{domain}/~{user}/foo{?query,number}", data)
+// Returns http://example.com/~fred/foo?query=mycelium
+
+// ..or use `Template` constructor
+var data = {"domain":"example.com", "user":"fred", "query":"mycelium", "number": 3}
+var template = new URI.Template("http://{domain}/~{user}/foo{?query,number}")
+template.expand(data)
+// Returns http://example.com/~fred/foo?query=mycelium&number=3
+
+// Extract variables
+template.match("http://example.com/~fred/foo?query=mycelium&number=3")
+// Returns {"domain":"example.com", "user":"fred", "query":"mycelium", "number": "3"}
+
+template.match("http://other.com/?query=mycelium")
+// Returns false
+```
 
 
 Installation
@@ -34,30 +57,6 @@ var URI = require("uri-template-lite").URI
 ```
 
 
-
-Usage
------
-
-### Simple expand
-
-```javascript
-var data = {"domain":"example.com", "user":"fred", "query":"mycelium"}
-URI.expand("http://{domain}/~{user}/foo{?query,number}", data)
-// http://example.com/~fred/foo?query=mycelium
-```
-
-### Using Template constructor
-
-```javascript
-var template = new URI.Template("http://{domain}/~{user}/foo{?query,number}")
-var data = {"domain":"example.com", "user":"fred", "query":"mycelium", "number": 3}
-template.expand(data)
-// http://example.com/~fred/foo?query=mycelium&number=3
-template.match("http://example.com/~fred/foo?query=mycelium&number=3")
-// {"domain":"example.com", "user":"fred", "query":"mycelium", "number": "3"}
-template.match("http://other.com/?query=mycelium")
-// false
-```
 
 
 About error handling
@@ -93,7 +92,7 @@ External links
 
 ### Licence
 
-Copyright (c) 2014 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+Copyright (c) 2014-2015 Lauri Rooden &lt;lauri@rooden.ee&gt;  
 [The MIT License](http://lauri.rooden.ee/mit-license.txt)
 
 
