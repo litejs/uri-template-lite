@@ -10,7 +10,7 @@ var URI = require("../").URI
 
 var test = require("testman")
 
-test.asserts.hasVals = function(a, b, options) {
+test.describe.it.hasVals = function(a, b, options) {
 	var ok = a && true
 	ok && Object.keys(a).forEach(function(key){
 		if (
