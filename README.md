@@ -92,7 +92,7 @@ External links
 
 ### Licence
 
-Copyright (c) 2014-2015 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+Copyright (c) 2014-2019 Lauri Rooden &lt;lauri@rooden.ee&gt;  
 [The MIT License](http://lauri.rooden.ee/mit-license.txt)
 
 
