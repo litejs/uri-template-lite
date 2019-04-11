@@ -5,16 +5,11 @@
 [RFC 6570]: http://tools.ietf.org/html/rfc6570
 
 
-    @version    0.1.11
-    @date       2015-02-09
-    @stability  2 - Unstable
-
-
-
 URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4]
 ============
 
-URI Template [RFC 6570][] expansion and extraction.
+URI Template [RFC 6570][] expansion and extraction in 1.5KB
+that passes [URI Template Tests](https://github.com/uri-templates/uritemplate-test).
 
 
 Usage
@@ -57,8 +52,6 @@ var URI = require("uri-template-lite").URI
 ```
 
 
-
-
 About error handling
 --------------------
 
@@ -85,9 +78,9 @@ It should work IE6 and up but automated testing is currently broken.
 External links
 --------------
 
--   [Source-code on Github](https://github.com/litejs/uri-template-lite)
--   [Package on npm](https://npmjs.org/package/uri-template-lite)
--   URI Template [RFC 6570][]
+ - [Source-code on Github](https://github.com/litejs/uri-template-lite)
+ - [Package on npm](https://npmjs.org/package/uri-template-lite)
+ - URI Template [RFC 6570][]
 
 
 ### Licence

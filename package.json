@@ -1,7 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "0.1.11",
-  "stability": 2,
+  "version": "19.4.0",
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "description": "URI Template [RFC 6570] expansion and extraction",
