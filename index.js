@@ -80,7 +80,7 @@
 	URI.expand = expand
 	/**/
 
-	function Template(template) {
+	URI.Template = function Template(template) {
 		var self = this
 		self.template = template
 		//if (!(self instanceof Template)) return new Template(template)
@@ -134,7 +134,6 @@
 		/**/
 	}
 
-	URI.Template = Template
 // `this` is `exports` in NodeJS and `window` in browser.
 }(this.URI || (this.URI = {}));
 
