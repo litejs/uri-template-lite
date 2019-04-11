@@ -20,23 +20,22 @@ test.describe.it.hasVals = function(a, b, options) {
 }
 
 
-test = test.describe("URI Template Expand");
+test = test.describe("URI Template");
 
 includeExpandTests(require("./uritemplate-test/spec-examples.json"))
 includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
 includeExpandTests(require("./uritemplate-test/extended-tests.json"))
 // includeExpandTests(require("./uritemplate-test/negative-tests.json"))
+
+
 includeExpandTests(require("./custom-examples.json"))
+includeMatchTests(require("./custom-examples.json"))
 
-
-
-test = test.describe("URI Template Match");
 
 includeMatchTests(require("./uritemplate-test/spec-examples.json"))
 //includeMatchTests(require("./uritemplate-test/spec-examples-by-section.json"))
 //includeMatchTests(require("./uritemplate-test/extended-tests.json"))
 //includeMatchTests("uritemplate-test/negative-tests.json")
-includeMatchTests(require("./custom-examples.json"))
 
 
 
