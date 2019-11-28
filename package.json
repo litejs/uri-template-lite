@@ -15,7 +15,7 @@
   "main": "index.js",
   "readmeFilename": "README.md",
   "scripts": {
-    "test": "node tests/index.js"
+    "test": "lj test"
   },
   "repository": "git://github.com/litejs/uri-template-lite.git",
   "bugs": {
