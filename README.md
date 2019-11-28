@@ -1,16 +1,17 @@
-[1]: https://secure.travis-ci.org/litejs/uri-template-lite.png
+[1]: https://badgen.net/travis/litejs/uri-template-lite
 [2]: https://travis-ci.org/litejs/uri-template-lite
-[3]: https://coveralls.io/repos/litejs/uri-template-lite/badge.png
+[3]: https://badgen.net/coveralls/c/github/litejs/uri-template-lite
 [4]: https://coveralls.io/r/litejs/uri-template-lite
-[6]: https://www.buymeacoffee.com/lauriro
+[5]: https://badgen.net/packagephobia/install/uri-template-lite@19.11.0
+[6]: https://packagephobia.now.sh/result?p=uri-template-lite
+[7]: https://badgen.net/badge/icon/Buy%20Me%20A%20Tea/orange?icon=kofi&label
+[8]: https://www.buymeacoffee.com/lauriro
+
 [RFC 6570]: http://tools.ietf.org/html/rfc6570
-[size]: https://packagephobia.now.sh/badge?p=uri-template-lite
-[size-src]: https://packagephobia.now.sh/result?p=uri-template-lite
 
 
-
-URI Template &ndash; [![Build][1]][2] [![Coverage][3]][4] [![size][size]][size-src] <a href="https://www.buymeacoffee.com/lauriro" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Tea" width="170"></a>
-============
+URI Template Lite &ndash; [![Build][1]][2] [![Coverage][3]][4] [![Size][5]][6] [![Buy Me A Tea][7]][8]
+=================
 
 URI Template [RFC 6570][] expansion and extraction.
 
@@ -85,7 +86,7 @@ URI Template [RFC 6570][] and
 [Tests](https://github.com/uri-templates/uritemplate-test) |
 [Travis CI](https://travis-ci.org/litejs/uri-template-lite) |
 [Coveralls coverage](https://coveralls.io/github/litejs/uri-template-lite) |
-[Buy Me A Tea][6]
+[Buy Me A Tea][8]
 
 
 ## Licence
