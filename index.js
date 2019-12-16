@@ -2,7 +2,7 @@
 
 
 /**
- * @version    19.11.0
+ * @version    19.12.0
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
  */
@@ -10,6 +10,7 @@
 
 
 !function(URI) {
+	"use strict";
 
 	/**
 	 * URI Template
@@ -80,7 +81,6 @@
 
 	URI.Template = function Template(template) {
 		var self = this
-		self.template = template
 		//if (!(self instanceof Template)) return new Template(template)
 		/*** PARSE ***/
 		, pos = 0
@@ -118,6 +118,7 @@
 		}) + "$"
 		, re = RegExp(reStr)
 		, fn = Function("$", "var t,o={};" + fnStr + "return o")
+		self.template = template
 		self.match = function(uri) {
 			var match = re.exec(uri)
 			return match && fn(match)

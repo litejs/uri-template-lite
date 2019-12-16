@@ -6,6 +6,22 @@
 var URI = require("../").URI
 , testCase = require("litejs/test")
 .describe("URI Template")
+.test("multiple templates #2", function(assert) {
+	const UriTemplate = URI.Template
+	const a = new UriTemplate('img-{entryNo}')
+	const b = new UriTemplate('ref-{entryNo}')
+
+	assert.equal(a.template, 'img-{entryNo}')
+	assert.equal(b.template, 'ref-{entryNo}')
+
+	assert.equal(a.match('img-1234'), { entryNo: '1234' })
+	assert.equal(b.match('img-1234'), null)
+
+	assert.equal(a.match('ref-1234'), null)
+	assert.equal(b.match('ref-1234'), { entryNo: '1234' })
+
+	assert.end()
+})
 
 
 includeExpandTests(require("./uritemplate-test/spec-examples.json"))
