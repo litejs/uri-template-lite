@@ -35,7 +35,7 @@ template.match("http://example.com/~fred/foo?query=mycelium&number=3")
 // Returns {"domain":"example.com", "user":"fred", "query":"mycelium", "number": "3"}
 
 template.match("http://other.com/?query=mycelium")
-// Returns false
+// Returns null
 ```
 
 
