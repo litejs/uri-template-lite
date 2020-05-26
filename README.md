@@ -42,10 +42,10 @@ template.match("http://other.com/?query=mycelium")
 Installation
 ------------
 
-To use it in the browser, include uri-template-min.js in your site
+To use it in the browser, include uri-template.js in your site
 
 ```html
-<script src=uri-template-min.js></script>
+<script src=uri-template.js></script>
 ```
 
 In node.js: `npm install uri-template-lite`

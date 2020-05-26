@@ -1,6 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "19.12.0",
+  "version": "20.5.0",
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "description": "URI Template [RFC 6570] expansion and extraction",
@@ -13,7 +13,6 @@
     "litejs"
   ],
   "main": "index.js",
-  "readmeFilename": "README.md",
   "files": [
     "index.js"
   ],

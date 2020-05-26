@@ -1,13 +1,15 @@
 language: node_js
 sudo: false
-node_js:
-  - "node"
 git:
   depth: 3
+node_js:
+  - "4"
+  - "8"
 before_script:
-  - npm install istanbul coveralls litejs
+  - npm install -g litejs
+  - if [ ${TRAVIS_NODE_VERSION%%.*} = "8" ]; then npm install -g nyc coveralls; fi
 script:
-  - istanbul cover ./test/index.js
+  - if [ ${TRAVIS_NODE_VERSION%%.*} = "8" ]; then nyc -r lcovonly -r text lj test; else lj test; fi
 after_success:
-  - coveralls < coverage/lcov.info
+  - if [ ${TRAVIS_NODE_VERSION%%.*} = "8" ]; then coveralls < coverage/lcov.info; fi
 
