@@ -2,12 +2,14 @@
   "Percent encoding" :
   {
     "variables": {
+       "da-sh" : "dash",
        "re"    : ".*+?^=!:${}()|[]/\\",
        "var"   : "foo\nbar",
        "hello" : "Hello World!"
      },
      "testcases" : [
         ["http://example.com/{?var}", "http://example.com/?var=foo%0Abar"],
+        ["http://example.com/{?da-sh}", "http://example.com/?da-sh=dash"],
         ["http://example..*+?^=!:${}()|[]/\\/{?re}", "http://example..*+?^=!:${}()|[]/\\/?re=.*%2B%3F%5E%3D%21%3A%24%7B%7D%28%29%7C%5B%5D%2F%5C"]
      ]
   }
