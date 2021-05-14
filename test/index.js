@@ -1,11 +1,11 @@
 
 // git submodule init
 // git submodule update
-// npm i -g litejs
+// npm i -g @litejs/cli
 
 var URI = require("../").URI
-, testCase = require("litejs/test")
-.describe("URI Template")
+
+describe("URI Template")
 .test("multiple templates #2", function(assert) {
 	const UriTemplate = URI.Template
 	const a = new UriTemplate('img-{entryNo}')
@@ -43,7 +43,7 @@ includeMatchTests(require("./custom-examples.json"))
 
 function includeExpandTests(json) {
 	for (var level in json) {
-		testCase.test("it should pass " + level, function(assert) {
+		it("should pass " + level, function(assert) {
 			var res
 			, arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
@@ -65,7 +65,7 @@ function includeExpandTests(json) {
 
 function includeMatchTests(json) {
 	for(var level in json) {
-		testCase.test("it should pass " + level, function(assert) {
+		it("should pass " + level, function(assert) {
 			var arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
 
