@@ -94,32 +94,31 @@
 
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
-			, reGroup = vals.split(",").map(function(_name) {
+			return vals.split(",").map(function(_name, i) {
 				var mod = _name.split(/[*:]/)
 				, name = mod[0]
 				, re = (lengths[name] || "(") + ".*?)"
 
 				pos++
-				//console.log("KEY", arguments)
 				if (mod[1]) {
 					re = "((?:%..|.){1," + mod[1] + "})"
 					lengths[name] = "(\\" + pos
 				}
 				fnStr += "t=($[" + pos + "]||'').split('" + (mod ? named ? sep + name + "=" : sep : ",") + "').map(d);"
-				fnStr += "o[\"" + name + "\"]=t.length>1?t:t[0];"
-				return (
+				fnStr += "o[\"" + name + "\"]=" + (mod[1] === "" ? "t;" : "t.length>1?t:t[0];")
+				re = escapeRegExp(i === 0 ? op === "+" ? "" : op : sep) + (
 					named ?
 					escapeRegExp(name) + "(?:=" + re + ")?" :
 					sep == "&" ?
 					escapeRegExp(name + "=") + re :
 					re
 				)
-			}).join(escapeRegExp(sep))
-			return (op != "+" ? escapeRegExp(op) + reGroup : reGroup)
-
+				return mod[1] === "" ? "(?:" + re + ")?" : re
+			}).join("")
 		}) + "$"
 		, re = RegExp(reStr)
 		, fn = Function("$,d", "var t,o={};" + fnStr + "return o")
+
 		self.template = template
 		self.match = function(uri) {
 			var match = re.exec(uri)

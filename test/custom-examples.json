@@ -18,9 +18,20 @@
     "variables": {
       "gallery": "cats",
       "img": [ "23", "42" ]
-     },
-     "testcases" : [
-        ["/{gallery}{?img*}", "/cats?img=23&img=42"]
-     ]
+    },
+    "testcases" : [
+      ["/{gallery}{?img*}", "/cats?img=23&img=42"],
+      ["/{gallery}{/img*}", "/cats/23/42"]
+    ]
+  },
+  "Empty img #4": {
+    "variables": {
+      "gallery": "cats",
+      "img": [ ]
+    },
+    "testcases" : [
+      ["/{gallery}{?img*}", "/cats"],
+      ["/{gallery}{/img*}", "/cats"]
+    ]
   }
 }

@@ -42,7 +42,7 @@ includeMatchTests(require("./custom-examples.json"))
 
 
 function includeExpandTests(json) {
-	for (var level in json) {
+	for (var level in json) !function(level) {
 		it("should expand " + level, function(assert) {
 			var res
 			, arr = json[level].testcases, len = arr.length, i = 0
@@ -60,11 +60,11 @@ function includeExpandTests(json) {
 			}
 			assert.end()
 		})
-	}
+	}(level)
 }
 
 function includeMatchTests(json) {
-	for(var level in json) {
+	for(var level in json) !function(level) {
 		it("should parse " + level, function(assert) {
 			var arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
@@ -82,7 +82,7 @@ function includeMatchTests(json) {
 						JSON.stringify(args)
 
 					//console.log(msg, uri.keys)
-					assert.type(res, "object", msg)
+					assert.type(res, "object")
 					hasVals(res, args, msg)
 				}
 			}
@@ -102,6 +102,6 @@ function includeMatchTests(json) {
 				return assert.ok(ok, options || "Expected: "+b+" Got: "+a )
 			}
 		})
-	}
+	}(level)
 }
 
