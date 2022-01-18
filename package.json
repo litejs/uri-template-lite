@@ -14,15 +14,25 @@
   ],
   "main": "index.js",
   "files": [
-    "index.js"
   ],
+  "bugs": "https://github.com/litejs/uri-template-lite/issues",
   "repository": "git://github.com/litejs/uri-template-lite.git",
-  "bugs": {
-    "url": "https://github.com/litejs/uri-template-lite/issues"
+  "scripts": {
+    "test": "lj test"
+  },
+  "devDependencies": {
+    "@litejs/cli": "21.11.0"
   },
   "litejs": {
-    "build": [
-      "-r index.js"
+    "lint": [
+      "jshint *.js"
     ]
+  },
+  "jshintConfig": {
+    "asi": true,
+    "evil": true,
+    "laxcomma": true,
+    "maxdepth": 6,
+    "quotmark": "double"
   }
 }
