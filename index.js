@@ -24,6 +24,8 @@
 	, expandRe = /\{([#&+.\/;?]?)((?:[-\w%.]+(\*|:\d+)?,?)+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
+	URI.decoder = decodeURIComponent
+
 	/*** EXPAND ***/
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
@@ -102,8 +104,7 @@
 					re = "((?:%..|.){1," + mod[1] + "})"
 					lengths[name] = "(\\" + pos
 				}
-				//TODO: decodeURIComponent throws an Error on invalid input, add try-catch
-				fnStr += "t=($[" + pos + "]||'').split('" + sep + "').map(decodeURIComponent);"
+				fnStr += "t=($[" + pos + "]||'').split('" + sep + "').map(d);"
 				fnStr += "o[\"" + name + "\"]=t.length>1?t:t[0];"
 				return (
 					named ?
@@ -117,11 +118,11 @@
 
 		}) + "$"
 		, re = RegExp(reStr)
-		, fn = Function("$", "var t,o={};" + fnStr + "return o")
+		, fn = Function("$,d", "var t,o={};" + fnStr + "return o")
 		self.template = template
 		self.match = function(uri) {
 			var match = re.exec(uri)
-			return match && fn(match)
+			return match && fn(match, URI.decoder)
 		}
 
 		function escapeRegExp(string) {
