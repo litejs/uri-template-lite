@@ -1,6 +1,5 @@
 {
-  "Percent encoding" :
-  {
+  "Percent encoding": {
     "variables": {
        "sub"   : ["a", "b"],
        "da-sh" : "dash",
@@ -13,6 +12,15 @@
         ["http://example.com/{?var}", "http://example.com/?var=foo%0Abar"],
         ["http://example.com/{?da-sh}", "http://example.com/?da-sh=dash"],
         ["http://example..*+?^=!:${}()|[]/\\/{?re}", "http://example..*+?^=!:${}()|[]/\\/?re=.*%2B%3F%5E%3D%21%3A%24%7B%7D%28%29%7C%5B%5D%2F%5C"]
+     ]
+  },
+  "Multiple img #4": {
+    "variables": {
+      "gallery": "cats",
+      "img": [ "23", "42" ]
+     },
+     "testcases" : [
+        ["/{gallery}{?img*}", "/cats?img=23&img=42"]
      ]
   }
 }

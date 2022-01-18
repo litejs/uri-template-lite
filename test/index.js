@@ -43,7 +43,7 @@ includeMatchTests(require("./custom-examples.json"))
 
 function includeExpandTests(json) {
 	for (var level in json) {
-		it("should pass " + level, function(assert) {
+		it("should expand " + level, function(assert) {
 			var res
 			, arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
@@ -65,7 +65,7 @@ function includeExpandTests(json) {
 
 function includeMatchTests(json) {
 	for(var level in json) {
-		it("should pass " + level, function(assert) {
+		it("should parse " + level, function(assert) {
 			var arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
 

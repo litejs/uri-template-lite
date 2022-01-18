@@ -104,7 +104,7 @@
 					re = "((?:%..|.){1," + mod[1] + "})"
 					lengths[name] = "(\\" + pos
 				}
-				fnStr += "t=($[" + pos + "]||'').split('" + sep + "').map(d);"
+				fnStr += "t=($[" + pos + "]||'').split('" + (mod ? named ? sep + name + "=" : sep : ",") + "').map(d);"
 				fnStr += "o[\"" + name + "\"]=t.length>1?t:t[0];"
 				return (
 					named ?
