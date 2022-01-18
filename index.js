@@ -24,11 +24,12 @@
 	, expandRe = /\{([#&+.\/;?]?)((?:[-\w%.]+(\*|:\d+)?,?)+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
+	URI.encoder = encodeURIComponent
 	URI.decoder = decodeURIComponent
 
 	/*** EXPAND ***/
 	function encodeNormal(val) {
-		return encodeURIComponent(val).replace(RESERVED, escape)
+		return URI.encoder(val).replace(RESERVED, escape)
 	}
 
 	function notNull(s) {
