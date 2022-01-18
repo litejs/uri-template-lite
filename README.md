@@ -1,16 +1,15 @@
-[1]: https://badgen.net/travis/litejs/uri-template-lite
-[2]: https://travis-ci.org/litejs/uri-template-lite
-[3]: https://badgen.net/coveralls/c/github/litejs/uri-template-lite
-[4]: https://coveralls.io/r/litejs/uri-template-lite
-[5]: https://badgen.net/packagephobia/install/uri-template-lite@19.11.0
-[6]: https://packagephobia.now.sh/result?p=uri-template-lite
-[7]: https://badgen.net/badge/icon/Buy%20Me%20A%20Tea/orange?icon=kofi&label
-[8]: https://www.buymeacoffee.com/lauriro
+
+[1]: https://badgen.net/coveralls/c/github/litejs/uri-template-lite
+[2]: https://coveralls.io/r/litejs/uri-template-lite
+[3]: https://badgen.net/packagephobia/install/uri-template-lite
+[4]: https://packagephobia.now.sh/result?p=uri-template-lite
+[5]: https://badgen.net/badge/icon/Buy%20Me%20A%20Tea/orange?icon=kofi&label
+[6]: https://www.buymeacoffee.com/lauriro
 
 [RFC 6570]: http://tools.ietf.org/html/rfc6570
 
 
-URI Template Lite &ndash; [![Build][1]][2] [![Coverage][3]][4] [![Size][5]][6] [![Buy Me A Tea][7]][8]
+URI Template Lite &ndash; [![Coverage][1]][2] [![size][3]][4] [![Buy Me A Tea][5]][6]
 =================
 
 URI Template [RFC 6570][] expansion and extraction.

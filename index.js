@@ -134,5 +134,5 @@
 	}
 
 // `this` is `exports` in NodeJS and `window` in browser.
-}(this.URI || (this.URI = {}));
+}(this.URI || (this.URI = {})); // jshint ignore:line
 
