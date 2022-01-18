@@ -1,6 +1,6 @@
 {
   "name": "uri-template-lite",
-  "version": "20.5.0",
+  "version": "22.1.0",
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "description": "URI Template [RFC 6570] expansion and extraction",
@@ -13,8 +13,7 @@
     "litejs"
   ],
   "main": "index.js",
-  "files": [
-  ],
+  "files": [],
   "bugs": "https://github.com/litejs/uri-template-lite/issues",
   "repository": "git://github.com/litejs/uri-template-lite.git",
   "scripts": {
@@ -24,6 +23,7 @@
     "@litejs/cli": "21.11.0"
   },
   "litejs": {
+    "build": false,
     "lint": [
       "jshint *.js"
     ]
