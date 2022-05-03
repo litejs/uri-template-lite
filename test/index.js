@@ -22,6 +22,11 @@ describe("URI Template")
 
 	assert.end()
 })
+.test("possible ReDoS", function(assert) {
+	const string = "{0" + "0".repeat(40)
+	assert.equal(string, URI.expand(string, "foo"))
+	assert.end()
+})
 
 
 includeExpandTests(require("./uritemplate-test/spec-examples.json"))

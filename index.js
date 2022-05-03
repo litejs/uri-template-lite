@@ -20,8 +20,8 @@
 	var RESERVED = /[!'()]/g
 	// /[[\]:\/!#$&()*+,;='?@]/g
 	, SEPARATORS = {"": ",", "+": ",", "#": ",", "?": "&"}
-	, escapeRe = /[$-\/?[-^{|}]/g
-	, expandRe = /\{([#&+.\/;?]?)((?:[-\w%.]+(\*|:\d+)?,?)+)\}/g
+	, escapeRe = /[$-/?[-^{|}]/g
+	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
 	URI.encoder = encodeURIComponent
