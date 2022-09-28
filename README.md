@@ -84,13 +84,13 @@ It should work IE6 and up but automated testing is currently broken.
 URI Template [RFC 6570][] and
 [Tests](https://github.com/uri-templates/uritemplate-test) |
 [Travis CI](https://travis-ci.org/litejs/uri-template-lite) |
-[Coveralls coverage](https://coveralls.io/github/litejs/uri-template-lite) |
-[Buy Me A Tea][8]
+[Coveralls coverage][2]  
+[Buy Me A Tea][6]
 
 
 ## Licence
 
-Copyright (c) 2014-2019 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+Copyright (c) 2014-2022 Lauri Rooden &lt;lauri@rooden.ee&gt;  
 [The MIT License](http://lauri.rooden.ee/mit-license.txt)
 
 
