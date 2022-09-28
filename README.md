@@ -83,7 +83,6 @@ It should work IE6 and up but automated testing is currently broken.
 [npm package](https://npmjs.org/package/uri-template-lite) |
 URI Template [RFC 6570][] and
 [Tests](https://github.com/uri-templates/uritemplate-test) |
-[Travis CI](https://travis-ci.org/litejs/uri-template-lite) |
 [Coveralls coverage][2]  
 [Buy Me A Tea][6]
 
