@@ -13,6 +13,7 @@
     "litejs"
   ],
   "main": "index.js",
+  "type": "commonjs",
   "files": [],
   "bugs": "https://github.com/litejs/uri-template-lite/issues",
   "repository": "git://github.com/litejs/uri-template-lite.git",
