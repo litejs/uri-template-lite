@@ -106,13 +106,13 @@
 					re = "((?:%..|.){1," + mod[1] + "})"
 					lengths[name] = "(\\" + pos
 				}
-				fnStr += "t=($[" + pos + "]||'').split('" + (mod ? named ? sep + name + "=" : sep : ",") + "').map(d);"
+				fnStr += "t=($[" + pos + "]||'').split('" + (mod[1] ? named ? sep + name + "=" : sep : ",") + "').map(d);"
 				fnStr += "o[\"" + name + "\"]=" + (mod[1] === "" ? "t;" : "t.length>1?t:t[0];")
 				re = escapeRegExp(i === 0 ? op === "+" ? "" : op : sep) + (
 					named ?
 					escapeRegExp(name) + "(?:=" + re + ")?" :
-					sep == "&" ?
-					escapeRegExp(name + "=") + re :
+					//sep == "&" ?
+					//escapeRegExp(name + "=") + re :
 					re
 				)
 				return mod[1] === "" ? "(?:" + re + ")?" : re

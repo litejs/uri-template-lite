@@ -15,7 +15,7 @@
   "main": "index.js",
   "files": [],
   "scripts": {
-    "test": "lj test --coverage --no-status --brief test/index.js && jshint *.js",
+    "test": "lj test --coverage --brief test/index.js && jshint *.js",
     "test-fast": "lj test --brief test/index.js"
   },
   "repository": "github:litejs/uri-template-lite",
