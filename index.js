@@ -31,6 +31,13 @@
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
+	function catchDecode(str) {
+		try {
+			return decodeURIComponent(str)
+		} catch(e) {
+			return str
+		}
+	}
 
 	function notNull(s) {
 		return s != null
@@ -84,7 +91,7 @@
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
 		, opts = Object.assign({
-			decoder: decodeURIComponent
+			decoder: catchDecode
 		}, opts_)
 		, pos = 0
 		, lengths = {}
