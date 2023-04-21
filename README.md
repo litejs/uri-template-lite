@@ -14,19 +14,23 @@ URI Template Lite &ndash; [![Coverage][1]][2] [![size][3]][4] [![Buy Me A Tea][5
 
 URI Template [RFC 6570][] expansion and extraction.
 
+
 Usage
 -----
 
+`npm install uri-template-lite`
+
 ```javascript
+var UriTemplate = require("uri-template-lite")
+
 // Call `expand` directly
 var data = {"domain":"example.com", "user":"fred", "query":"mycelium"}
-URI.expand("http://{domain}/~{user}/foo{?query,number}", data)
+UriTemplate.expand("http://{domain}/~{user}/foo{?query,number}", data)
 // Returns http://example.com/~fred/foo?query=mycelium
 
 // ..or use `Template` constructor
-var data = {"domain":"example.com", "user":"fred", "query":"mycelium", "number": 3}
-var template = new URI.Template("http://{domain}/~{user}/foo{?query,number}")
-template.expand(data)
+var template = new UriTemplate("http://{domain}/~{user}/foo{?query,number}")
+template.expand({"domain":"example.com", "user":"fred", "query":"mycelium", "number": 3})
 // Returns http://example.com/~fred/foo?query=mycelium&number=3
 
 // Extract variables
@@ -37,21 +41,6 @@ template.match("http://other.com/?query=mycelium")
 // Returns null
 ```
 
-
-Installation
-------------
-
-To use it in the browser, include uri-template.js in your site
-
-```html
-<script src=uri-template.js></script>
-```
-
-In node.js: `npm install uri-template-lite`
-
-```javascript
-var URI = require("uri-template-lite").URI
-```
 
 
 About error handling

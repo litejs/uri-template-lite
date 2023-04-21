@@ -27,12 +27,9 @@
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
-	URI.encoder = encodeURIComponent
-	URI.decoder = decodeURIComponent
 
-	/*** EXPAND ***/
 	function encodeNormal(val) {
-		return URI.encoder(val).replace(RESERVED, escape)
+		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
 
 	function notNull(s) {
@@ -44,11 +41,11 @@
 		return arr.length && arr.join(joinStr)
 	}
 
-	function expand(template, data) {
+	function expand(template, data, opts) {
 		return template.replace(expandRe, function(_, op, vals) {
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
-			, enc = op && sep == "," ? encodeURI : encodeNormal
+			, enc = op && sep == "," ? encodeURI : opts && opts.encoder || encodeNormal
 			, out = mapCleanJoin(vals.split(","), function(_name) {
 				var mod = _name.split(/[*:]/)
 				, name = mod[0]
@@ -82,12 +79,13 @@
 		}
 	)}
 
-	/**/
 
-	function Template(template) {
+	function Template(template, opts_) {
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
-		/*** PARSE ***/
+		, opts = Object.assign({
+			decoder: decodeURIComponent
+		}, opts_)
 		, pos = 0
 		, lengths = {}
 		, fnStr = ""
@@ -124,16 +122,15 @@
 		self.template = template
 		self.match = function(uri) {
 			var match = re.exec(uri)
-			return match && fn(match, URI.decoder)
+			return match && fn(match, opts.decoder)
 		}
 
 		function escapeRegExp(string) {
 			return string.replace(escapeRe, "\\$&")
 		}
-		/**/
-		/*** EXPAND ***/
-		self.expand = expand.bind(self, template)
-		/**/
+		self.expand = function(data) {
+			return expand(template, data, opts)
+		}
 	}
 
 // `this` is `exports` in NodeJS and `window` in browser.

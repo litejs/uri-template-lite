@@ -5,45 +5,64 @@
 
 var UriTemplate = require("../")
 
-describe("URI Template")
-.test("multiple templates #2", function(assert) {
-	const a = new UriTemplate('img-{entryNo}')
-	const b = new UriTemplate('ref-{entryNo}')
+describe("URI Template", function() {
 
-	assert.equal(a.template, 'img-{entryNo}')
-	assert.equal(b.template, 'ref-{entryNo}')
 
-	assert.equal(a.match('img-1234'), { entryNo: '1234' })
-	assert.equal(b.match('img-1234'), null)
+	it ("should encode/decode: {0}", [
+		["/path{;x}", { x: 123 }, "/path;x=123", { x: "123"} ]
+	], function(str, data, expected, parsed, assert) {
+		var tmp = new UriTemplate(str)
+		assert
+		.equal(UriTemplate.expand(str, data), expected)
+		.equal(tmp.expand(data), expected)
+		.equal(tmp.match(expected), parsed)
+		.end()
+	})
 
-	assert.equal(a.match('ref-1234'), null)
-	assert.equal(b.match('ref-1234'), { entryNo: '1234' })
+	this.test("multiple templates #2", function(assert) {
+		const a = new UriTemplate('img-{entryNo}', { decoder: decodeURIComponent })
+		const b = new UriTemplate('ref-{entryNo}')
 
-	assert.end()
+		assert.equal(a.template, 'img-{entryNo}')
+		assert.equal(b.template, 'ref-{entryNo}')
+
+		assert.equal(a.match('img-1234'), { entryNo: '1234' })
+		assert.equal(b.match('img-1234'), null)
+
+		assert.equal(a.match('ref-1234'), null)
+		assert.equal(b.match('ref-1234'), { entryNo: '1234' })
+
+		assert.equal(b.match('ref-Invalid%92'), { entryNo: 'Invalid%92' })
+		assert.throws(function() {
+			a.match("img-Invalid%92")
+		})
+
+		assert.end()
+	})
+	.test("possible ReDoS", function(assert) {
+		const string = "{0" + "0".repeat(40)
+		assert.equal(string, UriTemplate.expand(string, "foo"))
+		assert.end()
+	})
+
+
+	includeExpandTests(require("./uritemplate-test/spec-examples.json"))
+	includeMatchTests(require("./uritemplate-test/spec-examples.json"))
+
+	includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
+	//includeMatchTests(require("./uritemplate-test/spec-examples-by-section.json"))
+
+	includeExpandTests(require("./uritemplate-test/extended-tests.json"))
+	//includeMatchTests(require("./uritemplate-test/extended-tests.json"))
+
+	//includeExpandTests(require("./uritemplate-test/negative-tests.json"))
+	//includeMatchTests("uritemplate-test/negative-tests.json")
+
+	includeExpandTests(require("./custom-examples.json"))
+	includeMatchTests(require("./custom-examples.json"))
+
+
 })
-.test("possible ReDoS", function(assert) {
-	const string = "{0" + "0".repeat(40)
-	assert.equal(string, UriTemplate.expand(string, "foo"))
-	assert.end()
-})
-
-
-includeExpandTests(require("./uritemplate-test/spec-examples.json"))
-includeMatchTests(require("./uritemplate-test/spec-examples.json"))
-
-includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
-//includeMatchTests(require("./uritemplate-test/spec-examples-by-section.json"))
-
-includeExpandTests(require("./uritemplate-test/extended-tests.json"))
-//includeMatchTests(require("./uritemplate-test/extended-tests.json"))
-
-//includeExpandTests(require("./uritemplate-test/negative-tests.json"))
-//includeMatchTests("uritemplate-test/negative-tests.json")
-
-includeExpandTests(require("./custom-examples.json"))
-includeMatchTests(require("./custom-examples.json"))
-
-
 
 function includeExpandTests(json) {
 	for (var level in json) !function(level) {
