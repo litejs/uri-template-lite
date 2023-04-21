@@ -9,8 +9,11 @@
 
 
 
-!function(URI) {
+!function() {
 	"use strict";
+
+	module.exports = Template
+	module.exports.expand = expand
 
 	/**
 	 * URI Template
@@ -79,10 +82,9 @@
 		}
 	)}
 
-	URI.expand = expand
 	/**/
 
-	URI.Template = function Template(template) {
+	function Template(template) {
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
 		/*** PARSE ***/
@@ -135,5 +137,5 @@
 	}
 
 // `this` is `exports` in NodeJS and `window` in browser.
-}(this.URI || (this.URI = {})); // jshint ignore:line
+}(); // jshint ignore:line
 

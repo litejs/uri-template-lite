@@ -3,11 +3,10 @@
 // git submodule update
 // npm i -g @litejs/cli
 
-var URI = require("../").URI
+var UriTemplate = require("../")
 
 describe("URI Template")
 .test("multiple templates #2", function(assert) {
-	const UriTemplate = URI.Template
 	const a = new UriTemplate('img-{entryNo}')
 	const b = new UriTemplate('ref-{entryNo}')
 
@@ -24,7 +23,7 @@ describe("URI Template")
 })
 .test("possible ReDoS", function(assert) {
 	const string = "{0" + "0".repeat(40)
-	assert.equal(string, URI.expand(string, "foo"))
+	assert.equal(string, UriTemplate.expand(string, "foo"))
 	assert.end()
 })
 
@@ -53,7 +52,7 @@ function includeExpandTests(json) {
 			, arr = json[level].testcases, len = arr.length, i = 0
 			, args = json[level].variables
 			for (; i < len; i++) {
-				res = URI.expand(arr[i][0], args)
+				res = UriTemplate.expand(arr[i][0], args)
 				if (Array.isArray(arr[i][1])) {
 					assert.notEqual(arr[i][1].indexOf(res), -1)
 				} else if (arr[i][1] === false) {
@@ -80,7 +79,7 @@ function includeMatchTests(json) {
 					//	return arr[i][1].indexOf(res) != -1
 					//})
 				} else {
-					var uri = new URI.Template(arr[i][0])
+					var uri = new UriTemplate(arr[i][0])
 					res = uri.match(arr[i][1])
 					var msg = "# re: " + uri.re + " (" + arr[i][0] + ") : " + arr[i][1] + " ->\n" +
 						JSON.stringify(res) + "\n" +
