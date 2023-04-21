@@ -1,12 +1,7 @@
+/* global escape */
 
 
-
-/**
- * @version    20.5.0
- * @author     Lauri Rooden <lauri@rooden.ee>
- * @license    MIT License
- */
-
+/*! litejs.com/MIT-LICENSE.txt */
 
 
 !function() {
