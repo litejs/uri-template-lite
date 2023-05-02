@@ -33,7 +33,7 @@ describe("URI Template", function() {
 			for (; i < len; i++) {
 				res = UriTemplate.expand(arr[i][0], args)
 				if (Array.isArray(arr[i][1])) {
-					assert.notEqual(arr[i][1].indexOf(res), -1)
+					assert.anyOf(res, arr[i][1])
 				} else if (arr[i][1] === false) {
 					// negative test
 					assert.equal(res, arr[i][0])

@@ -22,10 +22,14 @@
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
-
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
+
+	function escapeFn(str) {
+		return str.replace(escapeRe, "\\$&")
+	}
+
 	function catchDecode(str) {
 		try {
 			return decodeURIComponent(str)
@@ -92,7 +96,7 @@
 		, lengths = {}
 		, fnStr = ""
 		, reStr = "^" + template.replace(parseRe, function(_, op, vals) {
-			if (!vals) return escapeRegExp(_)
+			if (!vals) return escapeFn(_)
 
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
@@ -108,11 +112,11 @@
 				}
 				fnStr += "t=($[" + pos + "]||'').split('" + (mod[1] ? named ? sep + name + "=" : sep : ",") + "').map(d);"
 				fnStr += "o[\"" + name + "\"]=" + (mod[1] === "" ? "t;" : "t.length>1?t:t[0];")
-				re = escapeRegExp(i === 0 ? op === "+" ? "" : op : sep) + (
+				re = escapeFn(i === 0 ? op === "+" ? "" : op : sep) + (
 					named ?
-					escapeRegExp(name) + "(?:=" + re + ")?" :
+					escapeFn(name) + "(?:=" + re + ")?" :
 					//sep == "&" ?
-					//escapeRegExp(name + "=") + re :
+					//escapeFn(name + "=") + re :
 					re
 				)
 				return mod[1] === "" ? "(?:" + re + ")?" : re
@@ -127,9 +131,6 @@
 			return match && fn(match, opts.decoder)
 		}
 
-		function escapeRegExp(string) {
-			return string.replace(escapeRe, "\\$&")
-		}
 		self.expand = function(data) {
 			return expand(template, data, opts)
 		}
