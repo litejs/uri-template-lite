@@ -6,13 +6,11 @@
 [5]: https://badgen.net/badge/icon/Buy%20Me%20A%20Tea/orange?icon=kofi&label
 [6]: https://www.buymeacoffee.com/lauriro
 
-[RFC 6570]: http://tools.ietf.org/html/rfc6570
-
 
 URI Template Lite &ndash; [![Coverage][1]][2] [![size][3]][4] [![Buy Me A Tea][5]][6]
 =================
 
-URI Template [RFC 6570][] expansion and extraction.
+URI Template [RFC 6570](http://tools.ietf.org/html/rfc6570) expansion and extraction.
 
 
 Usage
@@ -54,33 +52,10 @@ So for example, the incorrect expression
 
 
 
-Browser Support
----------------
-
-It should work IE6 and up but automated testing is currently broken.
-
--   For older browsers it requires `browser-upgrade-lite` package
-    or other ES5 polyfill.
--   FF3-4 `escape` should be patched to remove non-standard 2nd param,
-    `browser-upgrade-lite` does that.
-
-
-
-## External links
-
+> Copyright (c) 2014-2023 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+[MIT License](https://litejs.com/MIT-LICENSE.txt) |
 [GitHub repo](https://github.com/litejs/uri-template-lite) |
-[npm package](https://npmjs.org/package/uri-template-lite) |
-URI Template [RFC 6570][] and
-[Tests](https://github.com/uri-templates/uritemplate-test) |
-[Coveralls coverage][2]  
+[npm package](https://npmjs.org/package/@litejs/uri-template-lite) |
 [Buy Me A Tea][6]
-
-
-## Licence
-
-Copyright (c) 2014-2022 Lauri Rooden &lt;lauri@rooden.ee&gt;  
-[The MIT License](http://lauri.rooden.ee/mit-license.txt)
-
-
 
 
