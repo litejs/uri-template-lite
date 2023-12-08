@@ -1,4 +1,10 @@
 
-import UriTemplate, { expand } from "../index.js"
-console.log(typeof UriTemplate, typeof expand)
+import { expand } from "../index.js"
+
+describe("Run as ESM module", () => {
+	it("should export function", assert => {
+		assert.type(expand, "function")
+		assert.end()
+	})
+})
 

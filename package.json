@@ -1,9 +1,9 @@
 {
   "name": "uri-template-lite",
   "version": "23.4.0",
+  "description": "URI Template [RFC 6570] expansion and extraction",
   "license": "MIT",
   "author": "Lauri Rooden <lauri@rooden.ee>",
-  "description": "URI Template [RFC 6570] expansion and extraction",
   "keywords": [
     "uri",
     "url",
@@ -14,30 +14,13 @@
   ],
   "main": "index.js",
   "files": [],
-  "scripts": {
-    "test": "lj test --coverage --brief test/index.js && jshint *.js",
-    "test-fast": "lj test --brief test/index.js"
-  },
   "repository": "github:litejs/uri-template-lite",
+  "scripts": {
+    "lint": "jshint --config .github/jshint.json *.js",
+    "test": "lj t --brief test/index.js"
+  },
   "devDependencies": {
-    "@litejs/cli": "23.4.3",
+    "@litejs/cli": "23.12.0",
     "jshint": "2.13.6"
-  },
-  "litejs": {
-    "build": false,
-    "global": false
-  },
-  "jshintConfig": {
-    "esversion": 5,
-    "asi": true,
-    "evil": true,
-    "laxcomma": true,
-    "maxdepth": 6,
-    "node": true,
-    "nonbsp": true,
-    "undef": true,
-    "unused": true,
-    "shadow": "outer",
-    "quotmark": "double"
   }
 }

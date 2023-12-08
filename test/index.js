@@ -6,13 +6,6 @@
 var UriTemplate = require("../")
 
 describe("URI Template", function() {
-	require("@litejs/cli/snapshot.js")
-
-	it ("should load .{0}", "cjs,mjs", function(ext, assert) {
-		var file = "./test/load." + ext
-		assert.cmdSnapshot("node " + file, file).end()
-	})
-
 
 	it ("should encode/decode: {0}", [
 		["/path{;x,empty}", { x: 123,"empty":"" }, "/path;x=123;empty", { x: "123","empty":""} ],
