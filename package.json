@@ -2,8 +2,6 @@
   "name": "uri-template-lite",
   "version": "23.4.0",
   "description": "URI Template [RFC 6570] expansion and extraction",
-  "license": "MIT",
-  "author": "Lauri Rooden <lauri@rooden.ee>",
   "keywords": [
     "uri",
     "url",
@@ -12,15 +10,38 @@
     "rfc6570",
     "litejs"
   ],
-  "main": "index.js",
+  "license": "MIT",
+  "author": "Lauri Rooden <lauri@rooden.ee>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.esm.mjs"
+    },
+    "./package.json": "./package.json",
+    "./src/*": "./src/*"
+  },
+  "main": "dist/index.cjs",
+  "unpkg": "dist/index.umd.production.min.cjs",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
   "files": [],
-  "repository": "github:litejs/uri-template-lite",
   "scripts": {
-    "lint": "jshint --config .github/jshint.json *.js",
-    "test": "lj t --brief test/index.js"
+    "lint": "jshint --config .github/jshint.json src/index.ts",
+    "test": "lj t --brief test/index.js",
+    "build": "yarn run build:tsdx && yarn run build:dts:bundle",
+    "build:dts:bundle": "ynpx @bluelovers/dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --no-banner --inline-declare-global & echo build:dts:bundle",
+    "build:tsdx": "ynpx @bluelovers/tsdx build --target node"
   },
   "devDependencies": {
+    "@bluelovers/tsconfig": "^1.0.34",
     "@litejs/cli": "23.12.0",
     "jshint": "2.13.6"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }

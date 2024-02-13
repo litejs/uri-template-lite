@@ -3,7 +3,7 @@
 // git submodule update
 // npm i -g @litejs/cli
 
-var UriTemplate = require("../")
+var UriTemplate = require("../dist/index.cjs")
 
 describe("URI Template", function() {
 
