@@ -1,5 +1,5 @@
 
-import { expand } from "../index.js"
+import { expand } from "../dist/index.esm.mjs"
 
 describe("Run as ESM module", () => {
 	it("should export function", assert => {

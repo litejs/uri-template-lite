@@ -3,13 +3,6 @@
 
 /*! litejs.com/MIT-LICENSE.txt */
 
-
-!function() {
-	"use strict";
-
-	module.exports = Template
-	module.exports.expand = expand
-
 	/**
 	 * URI Template
 	 * @see http://tools.ietf.org/html/rfc6570
@@ -22,7 +15,7 @@
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
-	function encodeNormal(val) {
+	function encodeNormal(val: string) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
 
@@ -47,7 +40,7 @@
 		return arr.length && arr.join(joinStr)
 	}
 
-	function expand(template, data, opts) {
+	function expand(template: string, data: Record<string, unknown>, opts?: IOptionsExpand) {
 		return template.replace(expandRe, function(_, op, vals) {
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
@@ -55,7 +48,7 @@
 			, out = mapCleanJoin(vals.split(","), function(_name) {
 				var mod = _name.split(/[*:]/)
 				, name = mod[0]
-				, val = data[name]
+				, val: string = data[name] as any
 
 				if (val == null) return
 
@@ -67,6 +60,7 @@
 						val = mapCleanJoin(Object.keys(val), function(key) {
 							return enc(key) + (mod ? "=" : ",") + enc(val[key])
 						}, mod && (named || sep == "/") ? sep : ",")
+						// @ts-ignore
 						if (mod) named = 0
 					}
 					if (!val) return
@@ -85,10 +79,26 @@
 		}
 	)}
 
+interface Template
+{
+	(template: string, opts_?: IOptions): {
+		template: string
+		match(uri: string): Record<string, unknown>
+		expand(data: Record<string, unknown>): string
+	}
 
-	function Template(template, opts_) {
+	new (template: string, opts_?: IOptions): {
+		template: string
+		match(uri: string): Record<string, unknown>
+		expand(data: Record<string, unknown>): string
+	}
+}
+
+	function Template(template: string, opts_?: IOptions) {
+		// @ts-ignore
 		var self = this
 		//if (!(self instanceof Template)) return new Template(template)
+			// @ts-ignore
 		, opts = Object.assign({
 			decoder: catchDecode
 		}, opts_)
@@ -136,6 +146,32 @@
 		}
 	}
 
+export { Template }
+export { expand }
+export default Template
+
+export interface IOptionsExpand
+{
+	encoder?(val: string): string
+}
+
+export interface IOptions extends IOptionsExpand
+{
+	decoder?(str: string): string
+}
+
+// @ts-ignore
+if (process.env.TSDX_FORMAT !== 'esm')
+{
+	Object.defineProperty(Template, "__esModule", { value: true });
+
+	Object.defineProperty(Template, 'Template', { value: Template });
+	Object.defineProperty(Template, 'default', { value: Template });
+
+	Object.defineProperty(Template, 'expand', { value: expand });
+
+}
+
 // `this` is `exports` in NodeJS and `window` in browser.
-}(); // jshint ignore:line
+ // jshint ignore:line
 
