@@ -10,10 +10,8 @@
 	module.exports = Template
 	module.exports.expand = expand
 
-	/**
-	 * URI Template
-	 * @see http://tools.ietf.org/html/rfc6570
-	 */
+	// URI Template
+	// @see http://tools.ietf.org/html/rfc6570
 
 	var RESERVED = /[!'()]/g
 	// /[[\]:\/!#$&()*+,;='?@]/g
