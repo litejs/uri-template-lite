@@ -4,6 +4,7 @@
 // npm i -g @litejs/cli
 
 var UriTemplate = require("../")
+require("@litejs/cli/test.js")
 
 describe("URI Template", function() {
 
