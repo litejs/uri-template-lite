@@ -9,7 +9,8 @@ describe("URI Template", function() {
 
 	it ("should encode/decode: {0}", [
 		["/path{;x,empty}", { x: 123,"empty":"" }, "/path;x=123;empty", { x: "123","empty":""} ],
-		["/path{?x,empty}", { x: 123,"empty":"" }, "/path?x=123&empty=", { x: "123","empty":""} ]
+		["/path{?x,empty}", { x: 123,"empty":"" }, "/path?x=123&empty=", { x: "123","empty":""} ],
+		["/café x{?x}", { x: 1 }, "/caf%C3%A9%20x?x=1", { x: "1" } ]
 	], function(str, data, expected, parsed, assert) {
 		var tmp = new UriTemplate(str)
 		assert

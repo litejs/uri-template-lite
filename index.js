@@ -19,6 +19,8 @@
 	, escapeRe = /[$-/?[-^{|}]/g
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
+	, literalRe = /[^!-~]+/g
+	, expandLiteralRe = RegExp(expandRe.source + "|" + literalRe.source, "g")
 
 	function encodeReserved(val) {
 		return encodeURI(val).replace(/%25([\da-f]{2})/gi, "%$1")
@@ -50,7 +52,8 @@
 	}
 
 	function expand(template, data, opts) {
-		return template.replace(expandRe, function(_, op, vals) {
+		return template.replace(expandLiteralRe, function(_, op, vals) {
+			if (!vals) return encodeURI(_)
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
 			, enc = op && sep == "," ? encodeReserved : opts && opts.encoder || encodeNormal
@@ -98,7 +101,7 @@
 		, lengths = {}
 		, fnStr = ""
 		, reStr = "^" + template.replace(parseRe, function(_, op, vals) {
-			if (!vals) return escapeFn(_)
+			if (!vals) return escapeFn(_.replace(literalRe, encodeURI))
 
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
