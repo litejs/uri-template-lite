@@ -20,14 +20,21 @@
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 	, literalRe = /[^!-~]+/g
+	, surrogateRe = /[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff]/g
 	, expandLiteralRe = RegExp(expandRe.source + "|" + literalRe.source, "g")
 
+	function toWellFormed(val) {
+		return ("" + val).replace(surrogateRe, function(m) {
+			return m[1] ? m : "�"
+		})
+	}
+
 	function encodeReserved(val) {
-		return encodeURI(val).replace(/%25([\da-f]{2})/gi, "%$1")
+		return encodeURI(toWellFormed(val)).replace(/%25([\da-f]{2})/gi, "%$1")
 	}
 
 	function encodeNormal(val) {
-		return encodeURIComponent(val).replace(RESERVED, escape)
+		return encodeURIComponent(toWellFormed(val)).replace(RESERVED, escape)
 	}
 
 	function escapeFn(str) {
@@ -53,7 +60,7 @@
 
 	function expand(template, data, opts) {
 		return template.replace(expandLiteralRe, function(_, op, vals) {
-			if (!vals) return encodeURI(_)
+			if (!vals) return encodeReserved(_)
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
 			, enc = op && sep == "," ? encodeReserved : opts && opts.encoder || encodeNormal
@@ -101,7 +108,7 @@
 		, lengths = {}
 		, fnStr = ""
 		, reStr = "^" + template.replace(parseRe, function(_, op, vals) {
-			if (!vals) return escapeFn(_.replace(literalRe, encodeURI))
+			if (!vals) return escapeFn(_.replace(literalRe, encodeReserved))
 
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"

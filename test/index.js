@@ -107,6 +107,18 @@ describe("URI Template", function() {
 		assert.equal(string, UriTemplate.expand(string, "foo"))
 		assert.end()
 	})
+	.test("lone surrogates", function(assert) {
+		assert
+		.equal(UriTemplate.expand("{x}", { x: "a\uD834b" }), "a%EF%BF%BDb")
+		.equal(UriTemplate.expand("{+x}", { x: "\uDD1E/" }), "%EF%BF%BD/")
+		.equal(UriTemplate.expand("{#x}", { x: ["\uD834"] }), "#%EF%BF%BD")
+		.equal(UriTemplate.expand("{x:1}", { x: "\uD834𝄞" }), "%EF%BF%BD")
+		.equal(UriTemplate.expand("{x:2}", { x: "\uD834𝄞" }), "%EF%BF%BD%F0%9D%84%9E")
+		.equal(UriTemplate.expand("{?x*}", { x: { "\uD834": "\uDD1E" } }), "?%EF%BF%BD=%EF%BF%BD")
+		.equal(UriTemplate.expand("\uD834{x}", { x: "y" }), "%EF%BF%BDy")
+		.equal(new UriTemplate("\uD834/{x}").match("%EF%BF%BD/y"), { x: "y" })
+		.end()
+	})
 
 
 	includeExpandTests(require("./uritemplate-test/spec-examples-by-section.json"))
