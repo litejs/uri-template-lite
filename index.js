@@ -20,6 +20,10 @@
 	, expandRe = /\{([#&+./;?]?)((?:[-\w%.]+(\*|:\d+)?(?:,|(?=})))+)\}/g
 	, parseRe  = RegExp(expandRe.source + "|.[^{]*?", "g")
 
+	function encodeReserved(val) {
+		return encodeURI(val).replace(/%25([\da-f]{2})/gi, "%$1")
+	}
+
 	function encodeNormal(val) {
 		return encodeURIComponent(val).replace(RESERVED, escape)
 	}
@@ -49,7 +53,7 @@
 		return template.replace(expandRe, function(_, op, vals) {
 			var sep = SEPARATORS[op] || op
 			, named = sep == ";" || sep == "&"
-			, enc = op && sep == "," ? encodeURI : opts && opts.encoder || encodeNormal
+			, enc = op && sep == "," ? encodeReserved : opts && opts.encoder || encodeNormal
 			, out = mapCleanJoin(vals.split(","), function(_name) {
 				var mod = _name.split(/[*:]/)
 				, name = mod[0]
@@ -69,7 +73,7 @@
 					}
 					if (!val) return
 				} else {
-					val = enc(mod[1] ? val.slice(0, mod[1]) : val)
+					val = enc(mod[1] ? Array.from("" + val).slice(0, mod[1]).join("") : val)
 				}
 
 				return (
